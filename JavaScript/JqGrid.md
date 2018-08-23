@@ -94,6 +94,8 @@ editoptions: array -->
 		defaultValue: "222",  -- 기본값 지정, js 함수호출 가능  ex: getdate()
 		dataInit:function(e){$(e).datepicker();} -- 데이터 입력 함수 지정
 	}
-
-
+----------------------------------
+### 자주 사용하는 함수 모음
+	
+	
 
