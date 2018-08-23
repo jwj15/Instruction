@@ -33,7 +33,7 @@ pager는 안쓸꺼면 생략 가능 (페이징처리정보나 로딩 row수 정�
 		viewrecords: true,
 		cellEdit : false,
 		loadonce:true, -- 이옵션을 true로 주면 한번 로딩 후 datatype를 local로 바꾼다. 즉 더이상 로딩 되지 않는다. 
-		                               로딩된 데이타를 정렬할때 사용. 페이징 처리시 false, 새로 로딩 필요시 datatype을 변경후 reload시도 
+		                         로딩된 데이타를 정렬할때 사용. 페이징 처리시 false, 새로 로딩 필요시 datatype을 변경후 reload시도 
 		multiselect : false, 여러 row 선택가능여부
     	width: 500, -- 너비 : 단위 픽셀
 		height: 250, -- 높이 : 단위 픽셀
