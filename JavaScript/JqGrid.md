@@ -4,9 +4,10 @@ jQueryUI의 테마를 사용
 
 jQueryUI, jQuery, jqGrid 관련 스크립트 로딩후 사용
 
-### HTML CODE - 
+### HTML CODE
 	<table id="jqGrid"></table>
 	<div id="jqGridPager"></div>
+
 pager는 안쓸꺼면 생략 가능 (페이징처리정보나 로딩 row수 정보)
 --------------------------------------
 
