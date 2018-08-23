@@ -1,16 +1,16 @@
-# 주기능 : 리스트 데이타를 그리드 테이블에 맵핑
+## 주기능 : 리스트 데이타를 그리드 테이블에 맵핑
 
-## jQueryUI의 테마를 사용
+jQueryUI의 테마를 사용
 
-## jQueryUI, jQuery, jqGrid 관련 스크립트 로딩후 사용
+jQueryUI, jQuery, jqGrid 관련 스크립트 로딩후 사용
 
-## HTML CODE - 
+### HTML CODE - 
 	<table id="jqGrid"></table>
 	<div id="jqGridPager"></div>
---------------------------------------
 pager는 안쓸꺼면 생략 가능 (페이징처리정보나 로딩 row수 정보)
+--------------------------------------
 
-## Script CODE 예제 - 
+### Script CODE 예제 - 
 	$("#comGrid").jqGrid({  
     	url: 'user/selectAdmNotice',  -- 호출 url
     	styleUI : 'Bootstrap',
@@ -44,7 +44,7 @@ pager는 안쓸꺼면 생략 가능 (페이징처리정보나 로딩 row수 정�
     	}
 	});
 	
-## colModel Option
+### colModel Option
 label    : string  --> 컬럼명 설정 conNames와 같은기능
 name     : string  --> 받은 리스트에서 출력할 값 이름
 key      : boolean --> rowid 지정
