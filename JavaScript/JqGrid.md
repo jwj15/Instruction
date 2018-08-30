@@ -97,5 +97,40 @@ editoptions: array -->
 ----------------------------------
 ### 자주 사용하는 함수 모음
 	
-	
+그리드 리사이징
 
+	$(window).on('resize.jqGrid', function () {
+		jQuery("#jqGrid").jqGrid( 'setGridWidth', 400 );
+	});
+
+추가
+	
+	$("#jqGrid").jqGrid(
+		'editGridRow'
+		,"new"
+		,{	 width:600
+			,dataheight:300
+			,url:"/admin/addEth"
+			,closeAfterAdd:true
+			,reloadAfterSubmit:true
+			,beforeInitData:function() {
+				$("#jqGrid").setGridParam({datatype : "json"});
+				$("#jqGrid").jqGrid('setColProp', 'ethCd')
+			}
+		});
+
+수정
+
+	$("#jqGrid").jqGrid(
+		'editGridRow'
+		, selectedRow 
+		,{	url:"/admin/updateEth"
+			,width:600
+			,dataheight:300
+			,reloadAfterSubmit:true
+			,closeAfterEdit:true
+			,beforeInitData:function() {
+				$("#jqGrid").setGridParam({datatype : "json"});
+				$("#jqGrid").jqGrid('setColProp', 'ethCd'});
+			}
+		});
