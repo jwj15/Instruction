@@ -21,7 +21,7 @@ pager는 안쓸꺼면 생략 가능 (페이징처리정보나 로딩 row수 정�
 			id : "id",
 			title : "title"
 		},
-    	colNames: ["ID","제목","내용","게시시작일자"],  -- 테이블 헤드 즉 컬럼 명 설정 
+    	colNames: ["ID","제목","내용","게시시작일자"],  -- 테이블 헤드 즉 컬럼 명 설정 여기서 헤드 설정시 colModel의 label생략
     	colModel: [                             -- 각 컬럼을 정의한다 
     		{ label: 'ID', name: 'id', key: true},
     		{ label: '제목', name: 'title',  width: 400 },
@@ -43,7 +43,17 @@ pager는 안쓸꺼면 생략 가능 (페이징처리정보나 로딩 row수 정�
     		root:"list",       -- root는 리스트를 선택한다
     		total:"total",     -- total 은 총 페이지수
     		records:"records"  -- recors 는 총 row수 
-    	}
+    	},
+    	loadComplete	: function(data) {  -- 로딩 완료후 수행되는 함수
+    		console.log(data);  
+    	},
+    	grouping:true,   -- 그룹핑 여부
+		groupingView : {
+			groupField : ['all','region'],   -- 그룹으로 묶을 name
+			groupText : ['{0}', '{0}'],      -- 그룹 이름 {0}은 그 값자체 의미
+			groupColumnShow : [false,false], -- 해당 컬럼을 그리드에 나타낼건지 여부
+			groupCollapse : true,            -- 로딩후 접혀있는지 여부
+		}
 	});
 	
 ### colModel Option
@@ -113,9 +123,12 @@ editoptions: array -->
 			,url:"/admin/addEth"
 			,closeAfterAdd:true
 			,reloadAfterSubmit:true
-			,beforeInitData:function() {
+			,beforeInitData:function() { -- 로딩전 값 설정
 				$("#jqGrid").setGridParam({datatype : "json"});
 				$("#jqGrid").jqGrid('setColProp', 'ethCd')
+			}
+			,afterSubmit: function() {  -- 전송후 수행되는 함수
+				return [true,""]; -- 리턴값 배열
 			}
 		});
 
@@ -123,7 +136,7 @@ editoptions: array -->
 
 	$("#jqGrid").jqGrid(
 		'editGridRow'
-		, selectedRow 
+		, 1      -- id
 		,{	url:"/admin/updateEth"
 			,width:600
 			,dataheight:300
@@ -134,3 +147,56 @@ editoptions: array -->
 				$("#jqGrid").jqGrid('setColProp', 'ethCd'});
 			}
 		});
+삭제
+	
+	$("#jqGrid").jqGrid(
+				'delGridRow'
+				,userId  -- id값으로 넘어감
+				,{	
+					url:"/admin/deleteUser"
+					,beforeShowForm: function() {  --로딩전 값 설정
+						$("#jqGrid").setGridParam({datatype : "json"});
+					}
+					,delData : {  -- 넘겨주는 데이터
+						"ethCd" : ethCd
+					}
+					,reloadAfterSubmit:true
+					,width:500
+					,msg: "삭제하시겠습니까?"  -- 확인 메세지
+				});
+그리드 클리어
+
+	$("#jqGrid").jqGrid("clearGridData");
+선택해제
+	
+	$("#jqGrid").jqGrid("resetSelection");
+선택된 로우 데이터
+	
+	var selectedRowId = $("#jqGrid").getGridParam('selrow'); -- 선택된 row id return	
+	var row = $("#jqGrid").getRowData(selectedRowId);  -- 선택된 row data가져오기
+	row.컬럼네임   -- 선택된 row 특정 컬럼데이터
+	$('#jqGrid').getCell(selectedRow, '컬럼네임');  -- 위와같음
+특정 셀값 가져오기
+	
+	var list = $("#jqGrid").jqGrid("getCol", "특정셀이름"); -- 배열 리턴
+그리드 설정 값 변경
+	
+	$("#jqGrid").setGridParam({datatype : "json"}).trigger("reloadGrid");
+	-- 마지막에 reloadGrid는 리로딩 트리거 주로 값 변경해주고 재로딩 할때 사용
+	-- setGridParam안에 들어가는설정값은 처음 그리드 설정할때 값과 같다
+그리드에 row 추가
+	
+	$("#jqGrid").jqGrid('addRowData'
+	,"total" -- rowId설정(고유한값)
+	,{"traitCd":"총계","korCtnts":"","yesAns":sumYes,"noAns":sumNo,"sumAns":sumTotal}
+	    -- 추가될 데이터 기본 추가된 컬럼수에 맞춰 입력
+	,"last");  --추가될 위치 (+ first)
+그룹 헤더 설정
+	
+	$("#jqGrid").jqGrid('setGroupHeaders', {
+	    	useColSpanStyle: true,
+	    	groupHeaders : [
+	        	{startColumnName: 'yesAns', numberOfColumns: 2, titleText: '남성'},
+	        	{startColumnName: 'yesAns_W', numberOfColumns: 2, titleText: '여성'}
+	        ]
+	    })
